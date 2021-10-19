@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 배포 시에는 development.js 를 production.js로 변경 -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 최신 Object, Method는 babel polyfill-->
+</head>
+<body>
+    <div id="root"></div> <!--결과 : <div id='root'><button>Like</button></div>-->
+    <script type="text/babel">
+        const e = React.createElement;
+        
+        class LikeButton extends React.Component {
+            constructor(props){
+                super(props);
+                this.state = {
+                    liked: false,
+                };
+            }
+
+            render() {
+                
+                //return e('html태그',{속성1, 속성2, ...},'텍스트')
+                // return e('button', 
+                //         { 
+                //             onClick: () => { this.setState({ liked: true}) },
+                //             type: 'submit'
+                //         } ,
+                //          this.state.liked === true ? 'Liked' : 'Like'); 
+                
+                //대체 JSX ( JS + XML )
+                
+                return <button type="submit" onClick={ () => { this.setState({ liked: true })}} >
+                        {this.state.liked === true ? 'Liked': 'Like' }
+                    </button>
+
+            }
+        }
+
+    </script>
+    <script type="text/babel">
+        //ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+        ReactDOM.render( <LikeButton />, document.querySelector('#root'));
+    </script>
+
+    <script>
+    eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0.1(2)',3,3,'console|log|1111'.split('|'),0,{}))
+    eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0.1(2)',3,3,'console|log|1111'.split('|'),0,{}))
+    </script>
+    
+</body>
+</html>

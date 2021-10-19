@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 배포 시에는 development.js 를 production.js로 변경 -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 최신 Object, Method는 babel polyfill-->
+</head>
+<body>
+    <div id="root"></div> <!--결과 : <div id='root'><button>Like</button></div>-->
+    <script type="text/babel">
+        const e = React.createElement;
+        
+        class GuGuDan extends React.Component {
+            // constructor(props){
+            //     super(props);
+            //     this.state = {
+            //         first: Math.ceil(Math.random() * 9),
+            //         second: Math.ceil(Math.random() * 9),
+            //         value: '',
+            //         result: '',
+            //     };
+            // }
+
+            state = {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: '',
+                result: '',
+            };
+
+
+            //function onSubmit(e){} 로 대체도 가능하나 onSubmib, onChange 에서 => 사용하지 않으면 this가 window 객체의 this가 되어서 사용 불가
+            onSubmit = (e) => {
+                e.preventDefault();
+                if(parseInt(this.state.value) === this.state.first * this.state.second){
+                    this.setState ( (prevState) => {
+                        return {
+                            result : ' 정답: ' + prevState.value,
+                            first : Math.ceil(Math.random() * 9),
+                            second : Math.ceil(Math.random() * 9),
+                            value : '',
+                        }
+                    });
+                }else{
+                    this.setState({
+                        result : '땡',
+                        value : '',
+                    });
+                }
+                
+                this.input.focus();
+            }
+
+            input;
+            onRefInput = (c) => { this.input = c; } 
+
+            onChange = (e) => this.setState({ value : e.target.value});
+
+            render() {
+                console.log('입력할 때 마다 랜더링되기 때문에 성능 문제 발생.');
+                return (
+                 <React.Fragment>
+                    <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                    <form onSubmit={this.onSubmit}>
+                        <input ref={this.onRefInput} type="number" value={this.state.value} onChange={this.onChange} />
+                        <button>입력!</button>
+                    </form>
+                    <div>{this.state.result}</div>
+                </React.Fragment>
+                );
+            }
+        }
+
+    </script>
+    <script type="text/babel">
+        ReactDOM.render( <><GuGuDan /><GuGuDan /><GuGuDan /></>, document.querySelector('#root'));
+    </script>
+    
+</body>
+</html>
